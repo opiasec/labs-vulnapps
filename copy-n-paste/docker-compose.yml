@@ -1,0 +1,48 @@
+version: '3.4'
+services:
+    api:
+        container_name: a1_api_2
+        build:
+            context: .
+            dockerfile: deployments/a1inj.Dockerfile
+        ports:
+            - "3000:3000"
+        networks:
+            - a1net
+        command: "go run server.go"
+        environment:
+            - MYSQL_ROOT_PASSWORD=root
+            - MYSQL_USER=user
+            - MYSQL_PASSWORD=pass
+            - MYSQL_DATABASE=a1db
+            - APP_URL
+        depends_on:
+            - mysqldb
+        external_links:
+            - mysqldb:mysqldb
+        restart: unless-stopped
+        volumes:
+            - /lab/code/lab/app:/go/src/github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app
+        
+    mysqldb:
+        container_name: mysqldb
+        image: registry.registry.svc.cluster.local:5000/mariadb:10.6.3
+        ports:
+          - "3307:3307"
+        volumes:
+            - db_data:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_USER: user
+            MYSQL_PASSWORD: pass
+            MYSQL_DATABASE: a1db
+        networks:
+            - a1net
+
+networks:
+    a1net:
+
+volumes:
+    db_data:
+
+    
