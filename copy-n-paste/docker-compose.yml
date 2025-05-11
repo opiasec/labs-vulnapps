@@ -22,7 +22,7 @@ services:
             - mysqldb:mysqldb
         restart: unless-stopped
         volumes:
-            - /lab/code/lab/app:/go/src/github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app
+            - ./app:/go/src/github.com/globocom/secDevLabs/owasp-top10-2021-apps/a3/copy-n-paste/app
         
     mysqldb:
         container_name: mysqldb

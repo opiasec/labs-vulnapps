@@ -3,7 +3,7 @@ services:
     image: registry.registry.svc.cluster.local:5000/node:18
     working_dir: /usr/src/app
     volumes:
-      - /lab/code:/usr/src/app
+      - ./app:/usr/src/app
     command: ["node", "index.js"]
     ports:
       - "3000:3000"
